@@ -7,7 +7,7 @@ on:
         description: 'Branch to deploy'
         required: true
         type: string
-        default: 'main'
+        default: 'master'
       action:
         description: 'Terraform action'
         required: true

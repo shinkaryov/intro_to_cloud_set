@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
     inputs:
       environment:
-        description: 'Target environment for bootstrapping (e.g., dev, prod)'
+        description: 'Target environment for bootstrapping'
         required: true
         type: choice
         options:

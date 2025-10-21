@@ -22,6 +22,13 @@ jobs:
     name: Terraform
     runs-on: ubuntu-latest
     environment: azure
+    timeout-minutes: 15
+
+    env:
+      ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+      ARM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+      ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+      ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
     steps:
       - name: Checkout
@@ -37,6 +44,15 @@ jobs:
             --tenant ${{ secrets.AZURE_TENANT_ID }}
           az account set --subscription ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
+      - name: Register Azure Providers
+        run: |
+          echo "Registering required Azure Resource Providers..."
+          az provider register --namespace Microsoft.Storage --wait
+          az provider register --namespace Microsoft.Network --wait
+          az provider register --namespace Microsoft.Compute --wait
+          az provider register --namespace Microsoft.Resources --wait
+          echo "Providers registered successfully"
+
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
 
@@ -46,9 +62,9 @@ jobs:
 
       - name: Terraform Plan
         working-directory: terraform-infra
-        run: terraform plan
+        run: terraform plan -lock-timeout=5m
 
       - name: Terraform Apply
         if: github.event.inputs.action == 'apply'
         working-directory: terraform-infra
-        run: terraform apply -auto-approve
+        run: terraform apply -auto-approve -lock-timeout=5m

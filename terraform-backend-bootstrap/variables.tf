@@ -12,7 +12,7 @@ variable "location" {
 
 variable "storage_account_name" {
   type        = string
-  default     = "settfstatestorageaccount"
+  default     = "settfstatesa"
   description = "Globally unique storage account name"
 }
 

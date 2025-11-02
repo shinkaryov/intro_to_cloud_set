@@ -51,11 +51,6 @@ resource "azurerm_network_interface" "nic" {
   }
 }
 
-# Read SSH key
-data "local_file" "ssh_key" {
-  filename = var.ssh_public_key
-}
-
 # Cloud-init script
 data "template_file" "cloud_init" {
   template = file("${path.module}/cloud-init.yml")
@@ -89,7 +84,7 @@ resource "azurerm_linux_virtual_machine" "vm" {
 
   admin_ssh_key {
     username   = "azureuser"
-    public_key = data.local_file.ssh_key.content
+    public_key = var.ssh_public_key
   }
 
   custom_data = base64encode(data.template_file.cloud_init.rendered)

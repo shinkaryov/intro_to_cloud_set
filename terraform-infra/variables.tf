@@ -13,4 +13,10 @@ variable "environment" {
 variable "ssh_public_key" {
   type        = string
   description = "SSH public key for VM access"
+  sensitive   = true
+}
+
+variable "PRIVATE_IP" {
+  type    = string
+  default = "10.0.0.4"
 }

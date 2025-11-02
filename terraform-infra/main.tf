@@ -53,7 +53,7 @@ resource "azurerm_network_interface" "nic" {
 
 # Cloud-init script
 data "template_file" "cloud_init" {
-  template = file("${path.module}/cloud_init.yml")
+  template = file("${path.module}/cloud-init.yml")
 
   vars = {
     PRIVATE_IP = var.PRIVATE_IP

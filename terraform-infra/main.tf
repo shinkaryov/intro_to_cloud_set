@@ -21,6 +21,8 @@ resource "azurerm_virtual_network" "vnet" {
   }
 }
 
+
+
 # Subnet
 resource "azurerm_subnet" "subnet" {
   name                 = "subnet-nginx"

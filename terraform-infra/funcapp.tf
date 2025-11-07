@@ -39,10 +39,3 @@ resource "azurerm_linux_function_app" "function" {
     }
   }
 }
-
-# Random string for unique naming
-resource "random_string" "unique" {
-  length  = 8
-  special = false
-  upper   = false
-}

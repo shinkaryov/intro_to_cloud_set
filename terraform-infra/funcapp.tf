@@ -1,41 +1,48 @@
+# Random string for unique naming
+resource "random_string" "unique" {
+  length  = 8
+  special = false
+  upper   = false
+}
+
+# Storage Account (required for Function App)
 resource "azurerm_storage_account" "storage" {
-  name                     = "azfuncapp151003"
+  name                     = "stfuncapp${random_string.unique.result}"
   resource_group_name      = azurerm_resource_group.rg.name
   location                 = azurerm_resource_group.rg.location
   account_tier             = "Standard"
   account_replication_type = "LRS"
 }
 
-resource "azurerm_storage_container" "container" {
-  name                  = "function-code"
-  storage_account_name  = azurerm_storage_account.storage.name
-  container_access_type = "private"
-}
-
-resource "azurerm_function_app_plan" "plan" {
-  name                = "func-demo-plan"
-  location            = azurerm_resource_group.rg.location
+# App Service Plan
+resource "azurerm_service_plan" "plan" {
+  name                = "asp-function-app"
   resource_group_name = azurerm_resource_group.rg.name
-  kind                = "FunctionApp"
+  location            = azurerm_resource_group.rg.location
+  os_type             = "Linux"
   sku_name            = "Y1" # Consumption plan
 }
 
-resource "azurerm_function_app" "function" {
-  name                       = "func-app-151003"
-  location                   = azurerm_resource_group.rg.location
-  resource_group_name        = azurerm_resource_group.rg.name
-  app_service_plan_id        = azurerm_function_app_plan.plan.id
+# Function App
+resource "azurerm_linux_function_app" "function" {
+  name                = "func-app-${random_string.unique.result}"
+  resource_group_name = azurerm_resource_group.rg.name
+  location            = azurerm_resource_group.rg.location
+  
   storage_account_name       = azurerm_storage_account.storage.name
   storage_account_access_key = azurerm_storage_account.storage.primary_access_key
-  version                    = "~4"
-  os_type                    = "linux"
-
-  app_settings = {
-    FUNCTIONS_WORKER_RUNTIME = "python"
-    WEBSITE_RUN_FROM_PACKAGE = "1"
-  }
+  service_plan_id            = azurerm_service_plan.plan.id
 
   site_config {
-    linux_fx_version = "Python|3.12"
+    application_stack {
+      node_version = "18"
+    }
   }
+}
+
+# Random string for unique naming
+resource "random_string" "unique" {
+  length  = 8
+  special = false
+  upper   = false
 }

@@ -26,7 +26,7 @@ output "resource_group_name" {
 
 # Output SAS URL for the blob
 output "sas_url" {
-  value       = "https://${azurerm_storage_account.storage.name}.blob.core.windows.net/${azurerm_storage_container.container.name}/${azurerm_storage_blob.hello_file.name}${data.azurerm_storage_account_blob_container_sas.sas.sas}"
+  value       = "https://${azurerm_storage_account.storage_hw4.name}.blob.core.windows.net/${azurerm_storage_container.container_hw4.name}/${azurerm_storage_blob.hello_file.name}${data.azurerm_storage_account_blob_container_sas.sas.sas}"
   description = "SAS URL to access hello.txt"
   sensitive   = true
 }

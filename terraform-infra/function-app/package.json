@@ -1,0 +1,11 @@
+{
+  "name": "azure-function-app",
+  "version": "1.0.0",
+  "description": "Azure Function App with HTTP Trigger",
+  "scripts": {
+    "start": "func start",
+    "test": "echo \"No tests yet\""
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}

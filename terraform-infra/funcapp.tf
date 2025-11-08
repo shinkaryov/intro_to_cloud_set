@@ -19,23 +19,23 @@ resource "azurerm_service_plan" "plan" {
   name                = "asp-function-app"
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
-  os_type             = "Linux"
+  os_type             = "Windows"
   sku_name            = "Y1" # Consumption plan
 }
 
 # Function App
-resource "azurerm_linux_function_app" "function" {
+resource "azurerm_windows_function_app" "function" {
   name                = "func-app-${random_string.unique.result}"
   resource_group_name = azurerm_resource_group.rg.name
   location            = azurerm_resource_group.rg.location
-  
+
   storage_account_name       = azurerm_storage_account.storage.name
   storage_account_access_key = azurerm_storage_account.storage.primary_access_key
   service_plan_id            = azurerm_service_plan.plan.id
 
   site_config {
     application_stack {
-      node_version = "18"
+      node_version = "~18"
     }
   }
 }

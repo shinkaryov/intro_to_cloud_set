@@ -19,7 +19,7 @@ resource "azurerm_storage_account" "storage_hw4" {
 # Blob Container
 resource "azurerm_storage_container" "container_hw4" {
   name                  = "demo-files"
-  storage_account_name  = azurerm_storage_account.storage.name
+  storage_account_name  = azurerm_storage_account.storage_hw4.name
   container_access_type = "private"
 }
 

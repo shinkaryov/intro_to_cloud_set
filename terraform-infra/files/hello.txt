@@ -1,0 +1,7 @@
+Hello from Azure Blob Storage!
+
+This file was uploaded using Terraform.
+You are accessing it via a SAS (Shared Access Signature) URL.
+
+Date: November 8, 2025
+Project: Azure Storage Demo

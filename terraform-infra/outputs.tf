@@ -23,3 +23,10 @@ output "resource_group_name" {
   value       = azurerm_resource_group.rg.name
   description = "Resource Group name for portal access"
 }
+
+# Output SAS URL for the blob
+output "sas_url" {
+  value       = "https://${azurerm_storage_account.storage_hw4.name}.blob.core.windows.net/${azurerm_storage_container.container_hw4.name}/${azurerm_storage_blob.hello_file.name}${data.azurerm_storage_account_blob_container_sas.sas.sas}"
+  description = "SAS URL to access hello.txt"
+  sensitive   = true
+}

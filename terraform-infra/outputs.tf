@@ -30,3 +30,19 @@ output "sas_url" {
   description = "SAS URL to access hello.txt"
   sensitive   = true
 }
+
+# Output ACI
+output "public_ip_address" {
+  value       = azurerm_container_group.nginx.ip_address
+  description = "The public IP address of the nginx container"
+}
+
+output "fqdn" {
+  value       = azurerm_container_group.nginx.fqdn
+  description = "The fully qualified domain name of the container group"
+}
+
+output "nginx_url" {
+  value       = "http://${azurerm_container_group.nginx.fqdn}"
+  description = "Direct URL to access nginx"
+}

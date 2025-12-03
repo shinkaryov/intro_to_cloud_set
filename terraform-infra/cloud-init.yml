@@ -1,0 +1,25 @@
+#cloud-config
+package_update: true
+package_upgrade: true
+packages:
+  - nginx
+  - curl
+
+runcmd:
+  - systemctl enable nginx
+  - systemctl start nginx
+  - PRIVATE_IP=$(hostname -I | awk '{print $1}')
+  - |
+    cat <<EOF > /var/www/html/index.nginx-debian.html
+    <html>
+    <head><title>Hello</title></head>
+    <body style="font-family: Arial; text-align:center; margin-top:50px;">
+      <h1>Hello from $(hostname)</h1>
+      <h2>My IP: ${PRIVATE_IP}</h2>
+      <p>Deployed via <b>cloud-init</b> on Azure VM</p>
+    </body>
+    </html>
+    EOF
+  - systemctl restart nginx
+
+final_message: "Nginx installation and configuration completed. Access it via http://<VM_IP>"

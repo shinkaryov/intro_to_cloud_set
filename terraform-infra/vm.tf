@@ -41,9 +41,9 @@ data "template_file" "cloud_init" {
 
 # Linux VM
 resource "azurerm_linux_virtual_machine" "vm" {
-  name                = "vm-nginx"
-  location            = azurerm_resource_group.rg.location
-  resource_group_name = azurerm_resource_group.rg.name
+  name                  = "vm-nginx"
+  location              = azurerm_resource_group.rg.location
+  resource_group_name   = azurerm_resource_group.rg.name
   network_interface_ids = [
     azurerm_network_interface.nic.id,
   ]
@@ -76,3 +76,4 @@ resource "azurerm_linux_virtual_machine" "vm" {
     Environment = var.environment
     ManagedBy   = "Terraform"
   }
+}

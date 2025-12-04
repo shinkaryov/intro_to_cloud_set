@@ -13,3 +13,13 @@ output "nginx_url" {
   description = "URL to access Nginx"
   value       = "http://${azurerm_public_ip.public_ip.ip_address}"
 }
+
+output "log_analytics_workspace_id" {
+  description = "Log Analytics Workspace ID for monitoring"
+  value       = azurerm_log_analytics_workspace.law.id
+}
+
+output "cpu_alert_id" {
+  description = "CPU Alert Rule ID"
+  value       = azurerm_monitor_metric_alert.cpu_alert.id
+}

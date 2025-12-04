@@ -20,3 +20,9 @@ variable "PRIVATE_IP" {
   type    = string
   default = "10.0.0.4"
 }
+
+variable "alert_email_address" {
+  description = "Email address for alert notifications"
+  type        = string
+  default     = "o.shynkarov@setuniversity.edu.ua"
+}
